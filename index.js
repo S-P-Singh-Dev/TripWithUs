@@ -208,12 +208,14 @@ let hotels = [
   },
 ];
 
+let hotelsCopy = hotels.slice();
+
 function sortHotelsByPrice(pricing) {
   let result;
   if (pricing === 'low-to-high') {
-    result = hotels.sort((a, b) => a.price - b.price);
+    result = hotelsCopy.sort((a, b) => a.price - b.price);
   } else if (pricing === 'high-to-low') {
-    result = hotels.sort((a, b) => b.price - a.price);
+    result = hotelsCopy.sort((a, b) => b.price - a.price);
   }
   return result;
 }
@@ -221,9 +223,9 @@ function sortHotelsByPrice(pricing) {
 function sortHotelsByRating(rating) {
   let result;
   if (rating === 'low-to-high') {
-    result = hotels.sort((a, b) => a.rating - b.rating);
+    result = hotelsCopy.sort((a, b) => a.rating - b.rating);
   } else if (rating === 'high-to-low') {
-    result = hotes.sort((a, b) => b.rating - a.rating);
+    result = hotelsCopy.sort((a, b) => b.rating - a.rating);
   }
   return result;
 }
@@ -231,11 +233,16 @@ function sortHotelsByRating(rating) {
 function sortHotelsByReview(reviews) {
   let result;
   if (reviews === 'least-to-most') {
-    result = hotels.sort((a, b) => a.reviews - b.reviews);
+    result = hotelsCopy.sort((a, b) => a.reviews - b.reviews);
   } else if (reviews === 'most-to-least') {
-    result = hotels.sort((a, b) => b.reviews - a.reviews);
+    result = hotelsCopy.sort((a, b) => b.reviews - a.reviews);
   }
   return result;
+}
+
+function filterByAmenity(amenity) {
+  let result = hotels.filter((hotel) => hotel.amenity.toLowerCase() === amenity.toLowerCase());
+  return result;  
 }
 
 app.get('/hotels/sort/pricing', (req, res) => {
@@ -253,6 +260,12 @@ app.get('/hotels/sort/rating', (req, res) => {
 app.get('/hotels/sort/reviews', (req, res) => {
   let reviews = req.query.reviews;
   let result = sortHotelsByReview(reviews);
+  res.json({ hotels: result });
+});
+
+app.get('/hotels/filter/amenity', (req, res) => {
+  let amenity = req.query.amenity;
+  let result = filterByAmenity(amenity);
   res.json({ hotels: result });
 });
 
