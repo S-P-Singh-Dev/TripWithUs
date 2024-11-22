@@ -250,6 +250,11 @@ function filterByCountry(country) {
   return result;
 }
 
+function filterByCategory(category) {
+  let result = hotels.filter((hotel) => hotel.category.toLowerCase() === category.toLowerCase());
+  return result;
+}
+
 app.get('/hotels/sort/pricing', (req, res) => {
   let pricing = req.query.pricing;
   let result = sortHotelsByPrice(pricing);
@@ -278,6 +283,12 @@ app.get('/hotels/filter/country', (req, res) => {
  let country = req.query.country;
  let result = filterByCountry(country);
  res.json({ hotels: result });
+});
+
+app.get('/hotels/filter/category', (req, res) => {
+  let category = req.query.category;
+  let result = filterByCategory(category);
+  res.json({ hotels: result });
 });
 
 app.listen(port, () => {
