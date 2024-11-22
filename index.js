@@ -228,6 +228,16 @@ function sortHotelsByRating(rating) {
   return result;
 }
 
+function sortHotelsByReview(reviews) {
+  let result;
+  if (reviews === 'least-to-most') {
+    result = hotels.sort((a, b) => a.reviews - b.reviews);
+  } else if (reviews === 'most-to-least') {
+    result = hotels.sort((a, b) => b.reviews - a.reviews);
+  }
+  return result;
+}
+
 app.get('/hotels/sort/pricing', (req, res) => {
   let pricing = req.query.pricing;
   let result = sortHotelsByPrice(pricing);
@@ -237,6 +247,12 @@ app.get('/hotels/sort/pricing', (req, res) => {
 app.get('/hotels/sort/rating', (req, res) => {
   let rating = req.query.rating;
   let result = sortHotelsByRating(rating);
+  res.json({ hotels: result });
+});
+
+app.get('/hotels/sort/reviews', (req, res) => {
+  let reviews = req.query.reviews;
+  let result = sortHotelsByReview(reviews);
   res.json({ hotels: result });
 });
 
