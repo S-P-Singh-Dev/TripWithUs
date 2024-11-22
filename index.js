@@ -291,6 +291,11 @@ app.get('/hotels/filter/category', (req, res) => {
   res.json({ hotels: result });
 });
 
+app.get('/hotels', (req, res) => {
+  let result = hotels;
+  res.json({ hotels: result });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
