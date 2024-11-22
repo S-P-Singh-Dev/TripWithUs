@@ -245,6 +245,11 @@ function filterByAmenity(amenity) {
   return result;  
 }
 
+function filterByCountry(country) {
+  let result = hotels.filter((hotel) => hotel.country.toLowerCase() === country.toLowerCase());
+  return result;
+}
+
 app.get('/hotels/sort/pricing', (req, res) => {
   let pricing = req.query.pricing;
   let result = sortHotelsByPrice(pricing);
@@ -267,6 +272,12 @@ app.get('/hotels/filter/amenity', (req, res) => {
   let amenity = req.query.amenity;
   let result = filterByAmenity(amenity);
   res.json({ hotels: result });
+});
+
+app.get('/hotels/filter/country', (req, res) => {
+ let country = req.query.country;
+ let result = filterByCountry(country);
+ res.json({ hotels: result });
 });
 
 app.listen(port, () => {
